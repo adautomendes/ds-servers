@@ -11,14 +11,15 @@ const movieRouter = express.Router();
 
 appRouter.use('/auth', authRouter);
 authRouter.post('/login', AuthController.login);
+authRouter.post('/logout', AuthController.logout);
 
-appRouter.use('/user', AuthController.verifyJWT, userRouter);
+appRouter.use('/user', userRouter);
 userRouter.post('/', UserController.insert);
 userRouter.patch('/', UserController.update);
 userRouter.get('/:id?', UserController.search);
 userRouter.delete('/', UserController.delete);
 
-appRouter.use('/movie', AuthController.verifyJWT, movieRouter);
+appRouter.use('/movie', movieRouter);
 movieRouter.post('/', MovieController.insert);
 movieRouter.patch('/', MovieController.update);
 movieRouter.get('/:id?', MovieController.search);

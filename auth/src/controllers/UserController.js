@@ -10,6 +10,7 @@ module.exports = {
         const userExists = await User.findOne({ username });
 
         if (userExists) {
+            console.log(`=> '${username}' already exists.`);
             return res.status(HttpStatus.OK).json(userExists);
         }
 
@@ -18,6 +19,7 @@ module.exports = {
             password
         });
 
+        console.log(`=> '${username}' created!`);
         return res.status(HttpStatus.CREATED).json(user);
     },
 
@@ -51,6 +53,8 @@ module.exports = {
 
     async delete(req, res) {
         const { id } = req.body;
+
+        console.log(`ID => ${id}`);
 
         const response = await User.deleteOne({ _id: id });
 

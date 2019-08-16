@@ -17,7 +17,7 @@ module.exports = {
 
                 console.log(`=> User '${username}' logged in.`);
 
-                return res.status(HttpStatus.OK).json({ token: token });
+                return res.status(HttpStatus.OK).json({ token });
             } else {
                 return res.status(HttpStatus.UNAUTHORIZED).json({ msg: 'Invalid login.' });
             }
@@ -34,24 +34,24 @@ module.exports = {
         const { token } = req.headers;
 
         jwtValidation(token)
-        .then(() => {
-            return res.status(HttpStatus.OK).json({ token });
-        })
-        .catch(error => {
-            return res.status(HttpStatus.UNAUTHORIZED).json(error);
-        });
+            .then(() => {
+                return res.status(HttpStatus.OK).json({ token });
+            })
+            .catch(error => {
+                return res.status(HttpStatus.UNAUTHORIZED).json(error);
+            });
     },
 
     async verifyJWTMiddleware(req, res, next) {
         const { token } = req.headers;
 
         jwtValidation(token)
-        .then(() => {
-            next();
-        })
-        .catch(error => {
-            return res.status(HttpStatus.UNAUTHORIZED).json(error);
-        });
+            .then(() => {
+                next();
+            })
+            .catch(error => {
+                return res.status(HttpStatus.UNAUTHORIZED).json(error);
+            });
     }
 };
 

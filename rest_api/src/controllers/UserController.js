@@ -3,60 +3,88 @@ const axios = require('axios');
 
 module.exports = {
     async insert(req, res) {
+        const { token } = req.headers;
         const { username, password } = req.body;
 
-        //Testing if user already exists
-        const userExists = await User.findOne({ username });
+        let url = process.env.AUTH_SERVER + '/user';
+        let postData = { username, password };
+        let axiosConfig = {
+            headers: {
+                token
+            }
+        };
 
-        if (userExists) {
-            return res.status(HttpStatus.OK).json(userExists);
-        }
-
-        const user = await User.create({
-            username,
-            password
-        });
-
-        return res.status(HttpStatus.CREATED).json(user);
+        console.log(`POST ${url} => ${JSON.stringify(postData)}`);
+        axios.post(url, postData, axiosConfig)
+            .then((response) => {
+                return res.status(response.status).json(response.data);
+            })
+            .catch((error) => { //TODO: testar o que acontece se não passar o token
+                return res.status(error.response.status).json(error.response.data);
+            });
     },
 
     async update(req, res) {
+        const { token } = req.headers;
         const { username, password } = req.body;
 
-        const response = await User.updateOne({ username }, {
-            password
-        });
+        let url = process.env.AUTH_SERVER + '/user';
+        let postData = { username, password };
+        let axiosConfig = {
+            headers: {
+                token
+            }
+        };
 
-        if (response.nModified == 1 && response.ok == 1) {
-            const user = await User.find({ username });
-            return res.status(HttpStatus.OK).json(user);
-        }
-
-        return res.status(HttpStatus.BAD_REQUEST).json({ msg: 'Invalid request' });
+        console.log(`PATCH ${url} => ${JSON.stringify(postData)}`);
+        axios.patch(url, postData, axiosConfig)
+            .then((response) => {
+                return res.status(response.status).json(response.data);
+            })
+            .catch((error) => { //TODO: testar o que acontece se não passar o token
+                return res.status(error.response.status).json(error.response.data);
+            });
     },
 
     async search(req, res) {
         const { id } = req.params;
-        let users = [];
+        const { token } = req.headers;
 
-        if (id) { //Find one
-            users = await User.findById(id);
-        } else { //Find all
-            users = await User.find();
-        }
+        let url = process.env.AUTH_SERVER + '/user';
+        if (id)
+            url += '/' + id;
 
-        return res.status(HttpStatus.OK).json(users);
+        let axiosConfig = {
+            headers: {
+                token
+            }
+        };
+
+        console.log(`GET ${url}`);
+        axios.get(url, axiosConfig)
+            .then((response) => {
+                return res.status(response.status).json(response.data);
+            })
+            .catch((error) => { //TODO: testar o que acontece se não passar o token
+                return res.status(error.response.status).json(error.response.data);
+            });
     },
 
     async delete(req, res) {
         const { id } = req.body;
+        const { token } = req.headers;
 
-        const response = await User.deleteOne({ _id: id });
+        let url = process.env.AUTH_SERVER + '/user';
+        let data = { id };
+        let headers = { token };
 
-        if (response.deletedCount == 1 && response.ok == 1) {
-            return res.status(HttpStatus.NO_CONTENT).json();
-        }
-
-        return res.status(HttpStatus.BAD_REQUEST).json({ msg: 'Invalid request' });
+        console.log(`DELETE ${url} => ${JSON.stringify(data)}}`);
+        axios.delete(url, { headers, data })
+            .then((response) => {
+                return res.status(response.status).json(response.data);
+            })
+            .catch((error) => { //TODO: testar o que acontece se não passar o token
+                return res.status(error.response.status).json(error.response.data);
+            });
     }
 };
