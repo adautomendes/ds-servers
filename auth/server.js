@@ -22,6 +22,6 @@ mongoose.connect(DB.DB_URL, DB.DB_SETTINGS, (err) => {
     }
 });
 
-server.listen(process.env.SERVER_PORT, () => {
-    Logger.print(`✔ Auth server running at port ${process.env.SERVER_PORT}`)
+server.listen(process.env.PORT, () => {
+    Logger.print(`✔ Auth server running at port ${process.env.PORT}`)
 });

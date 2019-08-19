@@ -9,6 +9,6 @@ const server = express();
 server.use(express.json());
 server.use(routes);
 
-server.listen(process.env.SERVER_PORT, () => {
-    Logger.print(`✔ API server running at port ${process.env.SERVER_PORT}`)
+server.listen(process.env.PORT, () => {
+    Logger.print(`✔ API server running at port ${process.env.PORT}`)
 });
