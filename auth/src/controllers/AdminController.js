@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Logger = require('../logger')('[ADMIN]');
 
 module.exports = {
     async createAdmin() {
@@ -11,14 +12,14 @@ module.exports = {
         const userExists = await User.findOne({ username: admin.username });
 
         if (userExists) {
-            console.log(`✔ Admin already created`);
+            Logger.print(`✔ Admin already created`);
             return;
         }
 
         const user = await User.create(admin);
 
         if (user) {
-            console.log(`✔ Admin created successfully`);
+            Logger.print(`✔ Admin created successfully`);
             return;
         }
     }

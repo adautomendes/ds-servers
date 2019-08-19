@@ -2,6 +2,7 @@ const HttpStatus = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
+const Logger = require('../logger')('[AUTH]');
 
 module.exports = {
     async login(req, res) {
@@ -15,7 +16,7 @@ module.exports = {
                     expiresIn: '1d'
                 });
 
-                console.log(`=> User '${username}' logged in.`);
+                Logger.print(`User '${username}' logged in.`);
 
                 return res.status(HttpStatus.OK).json({ token });
             } else {
@@ -55,20 +56,16 @@ module.exports = {
     }
 };
 
-const jwtValidation = (token) => {
+const jwtValidation = token => {
     return new Promise((resolve, reject) => {
-        if (token == null)
-            reject({ error: 'Token not provided.' });
-
         jwt.verify(token, process.env.SECRET, (error, decoded) => {
             if (error) {
-                console.log(`=> Invalid token.`);
+                Logger.print(`Invalid token.`);
                 reject({ msg: 'Invalid token', token, error });
             } else {
-                console.log(`=> Token received for ID=${decoded.id}`);
+                Logger.print(`Token received for ID=${decoded.id}`);
                 resolve();
             }
-
         });
     });
 }

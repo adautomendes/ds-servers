@@ -1,42 +1,41 @@
-const HttpStatus = require('http-status-codes');
 const axios = require('axios');
+const Logger = require('../logger')('[USER]');
 
 module.exports = {
     async insert(req, res) {
         const { token } = req.headers;
-        const { username, password } = req.body;
 
         let url = process.env.AUTH_SERVER + '/user';
-        let postData = { username, password };
+        let postData = req.body;
         let axiosConfig = {
             headers: {
                 token
             }
         };
 
-        console.log(`POST ${url} => ${JSON.stringify(postData)}`);
+        Logger.printRequest('POST', url, postData);
         axios.post(url, postData, axiosConfig)
             .then((response) => {
                 return res.status(response.status).json(response.data);
             })
             .catch((error) => { //TODO: testar o que acontece se não passar o token
+                Logger.print(error);
                 return res.status(error.response.status).json(error.response.data);
             });
     },
 
     async update(req, res) {
         const { token } = req.headers;
-        const { username, password } = req.body;
 
         let url = process.env.AUTH_SERVER + '/user';
-        let postData = { username, password };
+        let postData = req.body;
         let axiosConfig = {
             headers: {
                 token
             }
         };
 
-        console.log(`PATCH ${url} => ${JSON.stringify(postData)}`);
+        Logger.printRequest('PATCH', url, postData);
         axios.patch(url, postData, axiosConfig)
             .then((response) => {
                 return res.status(response.status).json(response.data);
@@ -47,8 +46,8 @@ module.exports = {
     },
 
     async search(req, res) {
-        const { id } = req.params;
         const { token } = req.headers;
+        const { id } = req.params;
 
         let url = process.env.AUTH_SERVER + '/user';
         if (id)
@@ -60,7 +59,7 @@ module.exports = {
             }
         };
 
-        console.log(`GET ${url}`);
+        Logger.printRequest('GET', url);
         axios.get(url, axiosConfig)
             .then((response) => {
                 return res.status(response.status).json(response.data);
@@ -71,15 +70,17 @@ module.exports = {
     },
 
     async delete(req, res) {
-        const { id } = req.body;
         const { token } = req.headers;
+        const { id } = req.body;
 
         let url = process.env.AUTH_SERVER + '/user';
-        let data = { id };
-        let headers = { token };
+        let axiosConfig = {
+            headers: { token },
+            data: { id }
+        };
 
-        console.log(`DELETE ${url} => ${JSON.stringify(data)}}`);
-        axios.delete(url, { headers, data })
+        Logger.printRequest('DELETE', url, axiosConfig.data);
+        axios.delete(url, axiosConfig)
             .then((response) => {
                 return res.status(response.status).json(response.data);
             })

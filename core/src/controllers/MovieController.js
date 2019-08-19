@@ -1,6 +1,7 @@
 const HttpStatus = require('http-status-codes');
 
 const Movie = require('../models/Movie');
+const Logger = require('../logger')('[MOVIE]');
 
 module.exports = {
     async insert(req, res) {
@@ -10,6 +11,7 @@ module.exports = {
         const movieExists = await Movie.findOne({ title });
 
         if (movieExists) {
+            Logger.print(`'${title}' already exists.`);
             return res.status(HttpStatus.OK).json(movieExists);
         }
 
@@ -19,6 +21,7 @@ module.exports = {
             year
         });
 
+        Logger.print(`'${title}' created!`);
         return res.status(HttpStatus.CREATED).json(movie);
     },
 
@@ -32,6 +35,7 @@ module.exports = {
         });
 
         if(response.nModified == 1 && response.ok == 1) {
+            Logger.print(`'${title}' updated!`);
             const movie = await Movie.findById(id);
             return res.status(HttpStatus.OK).json(movie);
         }
@@ -41,12 +45,14 @@ module.exports = {
 
     async search(req, res) {
         const { id } = req.params;
-        let movies = [];
+        let movies;
 
         if(id) { //Find one
             movies = await Movie.findById(id);
+            Logger.print(`Movie '${movies.title}' found!`);
         } else { //Find all
             movies = await Movie.find();
+            Logger.print(`${movies.length} movies found!`);
         }
 
         return res.status(HttpStatus.OK).json(movies);
@@ -58,6 +64,7 @@ module.exports = {
         const response = await Movie.deleteOne({ _id: id });
 
         if(response.deletedCount == 1 && response.ok == 1) {
+            Logger.print(`${id} removed!`);
             return res.status(HttpStatus.NO_CONTENT).json();
         }
 

@@ -13,13 +13,13 @@ appRouter.use('/auth', authRouter);
 authRouter.post('/login', AuthController.login);
 authRouter.post('/logout', AuthController.logout);
 
-appRouter.use('/user', userRouter);
+appRouter.use('/user', AuthController.tokenExists, userRouter);
 userRouter.post('/', UserController.insert);
 userRouter.patch('/', UserController.update);
 userRouter.get('/:id?', UserController.search);
 userRouter.delete('/', UserController.delete);
 
-appRouter.use('/movie', movieRouter);
+appRouter.use('/movie', AuthController.tokenExists, movieRouter);
 movieRouter.post('/', MovieController.insert);
 movieRouter.patch('/', MovieController.update);
 movieRouter.get('/:id?', MovieController.search);

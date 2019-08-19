@@ -4,6 +4,8 @@ require('dotenv').config();
 
 const routes = require('./routes');
 const DB = require('./src/database/config');
+const Logger = require('./src/logger')('[SERVER]');
+
 const AdminController = require('./src/controllers/AdminController');
 
 const server = express();
@@ -13,13 +15,13 @@ server.use(routes);
 
 mongoose.connect(DB.DB_URL, DB.DB_SETTINGS, (err) => {
     if(!err) {
-        console.log(`✔ Connected to MongoDB`);
+        Logger.print(`✔ Connected to MongoDB`);
         AdminController.createAdmin();
     } else {
-        console.log(`✖ Error while connecting to MongoDB.\n${err}`);
+        Logger.print(`✖ Error while connecting to MongoDB.\n${err}`);
     }
 });
 
 server.listen(process.env.SERVER_PORT, () => {
-    console.log(`✔ Auth server running at port ${process.env.SERVER_PORT}`)
+    Logger.print(`✔ Auth server running at port ${process.env.SERVER_PORT}`)
 });

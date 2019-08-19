@@ -1,6 +1,7 @@
 const HttpStatus = require('http-status-codes');
 
 const User = require('../models/User');
+const Logger = require('../logger')('[USER]');
 
 module.exports = {
     async insert(req, res) {
@@ -10,7 +11,7 @@ module.exports = {
         const userExists = await User.findOne({ username });
 
         if (userExists) {
-            console.log(`=> '${username}' already exists.`);
+            Logger.print(`'${username}' already exists.`);
             return res.status(HttpStatus.OK).json(userExists);
         }
 
@@ -19,7 +20,7 @@ module.exports = {
             password
         });
 
-        console.log(`=> '${username}' created!`);
+        Logger.print(`'${username}' created!`);
         return res.status(HttpStatus.CREATED).json(user);
     },
 
@@ -31,6 +32,7 @@ module.exports = {
         });
 
         if (response.nModified == 1 && response.ok == 1) {
+            Logger.print(`'${username}' updated!`);
             const user = await User.find({ username });
             return res.status(HttpStatus.OK).json(user);
         }
@@ -44,8 +46,10 @@ module.exports = {
 
         if (id) { //Find one
             users = await User.findById(id);
+            Logger.print(`User '${users.username}' found!`);
         } else { //Find all
             users = await User.find();
+            Logger.print(`${users.length} users found!`);
         }
 
         return res.status(HttpStatus.OK).json(users);
@@ -54,11 +58,10 @@ module.exports = {
     async delete(req, res) {
         const { id } = req.body;
 
-        console.log(`ID => ${id}`);
-
         const response = await User.deleteOne({ _id: id });
 
         if (response.deletedCount == 1 && response.ok == 1) {
+            Logger.print(`${id} removed!`);
             return res.status(HttpStatus.NO_CONTENT).json();
         }
 

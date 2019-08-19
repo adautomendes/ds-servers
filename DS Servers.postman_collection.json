@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5b4e6651-b426-4ddc-8d2b-9ebf6e651e39",
+		"_postman_id": "8444ca3d-de4e-490e-b292-93ad4b22a4a2",
 		"name": "DS Servers",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -751,7 +751,11 @@
 								"exec": [
 									"var jsonData = pm.response.json();",
 									"",
-									"pm.globals.set(\"admin_token\", jsonData.token);"
+									"pm.globals.set(\"admin_token\", jsonData.token);",
+									"",
+									"pm.test(\"Login successful\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -796,7 +800,11 @@
 								"exec": [
 									"var jsonData = pm.response.json();",
 									"",
-									"pm.globals.set(\"user_id\", jsonData._id);"
+									"pm.globals.set(\"user_id\", jsonData._id);",
+									"",
+									"pm.test(\"User created or already exists.\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -884,7 +892,11 @@
 								"exec": [
 									"var jsonData = pm.response.json();",
 									"",
-									"pm.globals.set(\"adauto_token\", jsonData.token);"
+									"pm.globals.set(\"adauto_token\", jsonData.token);",
+									"",
+									"pm.test(\"Login successful\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -927,7 +939,9 @@
 							"script": {
 								"id": "cf91b20c-d760-434d-9ac3-301c8acf1c11",
 								"exec": [
-									""
+									"pm.test(\"User updated.\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -968,6 +982,20 @@
 				},
 				{
 					"name": "List users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "65693d62-f1c7-4ca8-bbb0-3685436d49a4",
+								"exec": [
+									"pm.test(\"Users list ok.\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -993,7 +1021,21 @@
 					"response": []
 				},
 				{
-					"name": "Find user by id Copy",
+					"name": "Find user by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0f2f35c-98a2-4313-9b1d-4e28077e2b15",
+								"exec": [
+									"pm.test(\"User find by ID ok.\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -1013,6 +1055,235 @@
 							"path": [
 								"user",
 								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a572396-c828-432c-8ecd-884b03958e92",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.globals.set(\"movie_id\", jsonData._id);",
+									"",
+									"pm.test(\"Movie created or already exists.\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{adauto_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"A volta dos que não foram\",\n\t\"duration\": 240,\n\t\"year\": 2019\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3333/movie",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c37ee0e6-b36b-4f0f-8689-15c7062e17c1",
+								"exec": [
+									"pm.test(\"Movies list ok.\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{adauto_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3333/movie",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find movie by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0244584b-9dd3-4197-89fd-096b94b401db",
+								"exec": [
+									"pm.test(\"Movie find by ID ok.\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{adauto_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3333/movie/{{movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"movie",
+								"{{movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eea2f2f8-d74c-4cb1-aff8-eae45245dba3",
+								"exec": [
+									"pm.test(\"Movie updated.\", function() {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{adauto_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"{{movie_id}}\",\n\t\"title\": \"A volta dos que não foram\",\n\t\"duration\": 1234,\n\t\"year\": 1234\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3333/movie",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c2eec205-fdcd-4940-9e90-f8cf8771bdd1",
+								"exec": [
+									"pm.test(\"Movie delete ok.\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"});",
+									"",
+									"pm.globals.unset(\"movie_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{adauto_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"{{movie_id}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3333/movie",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"movie"
 							]
 						}
 					},
@@ -1067,7 +1338,11 @@
 								"exec": [
 									"var jsonData = pm.response.json();",
 									"",
-									"pm.globals.set(\"admin_token\", jsonData.token);"
+									"pm.globals.set(\"admin_token\", jsonData.token);",
+									"",
+									"pm.test(\"Login successful\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -1110,7 +1385,11 @@
 							"script": {
 								"id": "f3f86988-8987-4ae2-a608-ff9b8bf340d8",
 								"exec": [
-									"// pm.globals.unset(\"user_id\");"
+									"pm.test(\"User delete ok.\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"});",
+									"",
+									"pm.globals.unset(\"user_id\");"
 								],
 								"type": "text/javascript"
 							}

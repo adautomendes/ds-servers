@@ -1,5 +1,6 @@
 const HttpStatus = require('http-status-codes');
 const axios = require('axios');
+const Logger = require('../logger')('[AUTH]');
 require('dotenv').config();
 
 module.exports = {
@@ -11,13 +12,12 @@ module.exports = {
         let postData = { username, password };
         let axiosConfig = {};
 
+        Logger.printRequest('POST', url, postData);
         axios.post(url, postData, axiosConfig)
             .then((response) => {
-                console.log(`✔ Token ${response.statusText}`);
                 return res.status(HttpStatus.OK).json({ token: response.data.token });
             })
             .catch((error) => {
-                console.log(`✖ ${error}`);
                 return res.status(error.response.status).json(error.response.data);
             });
     },
@@ -26,29 +26,14 @@ module.exports = {
         return res.status(HttpStatus.OK).json({ ok: true });
     },
 
-    async verifyJWT(req, res, next) {
+    async tokenExists(req, res, next) {
         const { token } = req.headers;
 
-        if (token == null)
-            return res.status(HttpStatus.BAD_REQUEST).json({ error: 'Token not provided.' });
-
-        let url = process.env.AUTH_SERVER + '/auth/validateToken';
-        let postData = {};
-        let axiosConfig = {
-            headers: {
-                token
-            }
-        };
-
-        axios.post(url, postData, axiosConfig)
-            .then((response) => {
-                console.log(`✔ Token ${response.statusText}`);
-                next();
-            })
-            .catch((error) => {
-                console.log(`✖ ${error}`);
-                return res.status(error.response.status).json(error.response.data);
-            });
+        if (!token) {
+            return res.status(HttpStatus.FORBIDDEN).json({ error: 'Token not provided.' });
+        } else {
+            next();
+        }
     }
     
 };

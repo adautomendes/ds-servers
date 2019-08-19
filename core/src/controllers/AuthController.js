@@ -1,5 +1,6 @@
 const axios = require('axios');
 const HttpStatus = require('http-status-codes');
+const Logger = require('../logger')('[AUTH]');
 require('dotenv').config();
 
 module.exports = {
@@ -20,11 +21,11 @@ module.exports = {
 
         axios.post(url, postData, axiosConfig)
             .then((response) => {
-                console.log(`✔ Token ${response.statusText}`);
+                Logger.print(`Token ${response.statusText}`);
                 next();
             })
             .catch((error) => {
-                console.log(`✖ ${error}`);
+                Logger.print(`${error}`);
                 return res.status(error.response.status).json(error.response.data);
             });
     }
