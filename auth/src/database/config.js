@@ -7,8 +7,6 @@ module.exports = {
         useCreateIndex: true,
         useNewUrlParser: true,
         useFindAndModify: true,
-        user: process.env.DB_USER,
-        pass: process.env.DB_PASS,
         dbName: process.env.DB_NAME
     }
 };
