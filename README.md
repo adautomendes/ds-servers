@@ -22,58 +22,41 @@ Server used to expose the funcionalities of backend to external users and system
 #### API Endpoints
 Find below all endpoints exposed by API server. Payload examples are available in Postman collection within this repo: ``DS Servers.postman_collection.json``.
 
-`POST http://<api_host>:<api_port>/auth/login`: used to authenticate the user.
-
-`POST http://<api_host>:<api_port>/auth/logout`: fake route just to inform client to delete token.
-
-
-`POST http://<api_host>:<api_port>/user`: create a new user.
-
-`PATCH http://<api_host>:<api_port>/user`: update an existing user.
-
-`GET http://<api_host>:<api_port>/user/<id>`: find an user by ID, if ID is not provided find all users.
-
-`DELETE http://<api_host>:<api_port>/user`: delete an existing user.
-
-
-`POST http://<api_host>:<api_port>/movie`: create a new movie.
-
-`PATCH http://<api_host>:<api_port>/movie`: update an existing movie.
-
-`GET http://<api_host>:<api_port>/movie/<id>`: find an movie by ID, if ID is not provided find all movies.
-
-`DELETE http://<api_host>:<api_port>/movie`: delete an existing movie.
+`POST http://<api_host>:<api_port>/auth/login`: used to authenticate the user.  
+`POST http://<api_host>:<api_port>/auth/logout`: fake route just to inform client to delete token.  
+  
+`POST http://<api_host>:<api_port>/user`: create a new user.  
+`PATCH http://<api_host>:<api_port>/user`: update an existing user.  
+`GET http://<api_host>:<api_port>/user/<id>`: find an user by ID, if ID is not provided find all users.  
+`DELETE http://<api_host>:<api_port>/user`: delete an existing user.  
+  
+`POST http://<api_host>:<api_port>/movie`: create a new movie.  
+`PATCH http://<api_host>:<api_port>/movie`: update an existing movie.  
+`GET http://<api_host>:<api_port>/movie/<id>`: find an movie by ID, if ID is not provided find all movies.  
+`DELETE http://<api_host>:<api_port>/movie`: delete an existing movie.  
 
 ## Configuration
 Each project (folder) has a `.env` file which contains environment variables used to start each server.
 
 ### Auth Server `.env` configuration
 
-`PORT`: port used to run Auth Server.
-
-`DB_URL`: URL of the database.
-
-`DB_NAME`: name of database that will be created by the application.
-
-`SECRET`: keyword used by JWT to generate tokens.
+`PORT`: port used to run Auth Server.  
+`DB_URL`: URL of the database.  
+`DB_NAME`: name of database that will be created by the application.  
+`SECRET`: keyword used by JWT to generate tokens.  
 
 ### Core Server `.env` configuration
 
-`PORT`: port used to run Core Server.
-
-`DB_URL`: URL of the database.
-
-`DB_NAME`: name of database that will be created by the application.
-
-`AUTH_SERVER`: address of Auth Server (e.g `http://localhost:5000`).
+`PORT`: port used to run Core Server.  
+`DB_URL`: URL of the database.  
+`DB_NAME`: name of database that will be created by the application.  
+`AUTH_SERVER`: address of Auth Server (e.g `http://localhost:5000`).  
 
 ### API Server `.env` configuration
 
-`PORT`: port used to run API Server.
-
-`CORE_SERVER`: address of Auth Server (e.g `http://localhost:3000`).
-
-`AUTH_SERVER`: address of Auth Server (e.g `http://localhost:5000`).
+`PORT`: port used to run API Server.  
+`CORE_SERVER`: address of Auth Server (e.g `http://localhost:3000`).  
+`AUTH_SERVER`: address of Auth Server (e.g `http://localhost:5000`).  
 
 
 ## Dependencies and Execution
