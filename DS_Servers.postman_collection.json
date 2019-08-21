@@ -1,48 +1,10 @@
 {
 	"info": {
-		"_postman_id": "efaeabba-d3d2-4d7b-8dd6-c35ca4c705c2",
+		"_postman_id": "04c678f8-062c-439f-9abc-102ef8178a60",
 		"name": "DS Servers",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "Pre Setup",
-			"item": [
-				{
-					"name": "Setup Vars",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "5e796f62-68d2-4570-938d-18117c20787e",
-								"exec": [
-									"pm.globals.clear();\r",
-									"\r",
-									"pm.globals.set(\"ds-servers-auth\", \"http://localhost:5000\");\r",
-									"pm.globals.set(\"ds-servers-core\", \"http://localhost:3000\");\r",
-									"pm.globals.set(\"ds-servers-api\", \"http://localhost:3333\");"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{ds-servers-auth}}/",
-							"host": [
-								"{{ds-servers-auth}}"
-							],
-							"path": [
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
 		{
 			"name": "Movie",
 			"item": [
