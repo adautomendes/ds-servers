@@ -20,7 +20,7 @@ Server responsible to manipulate entities (e.g "Movie") inside database. Has pro
 Server used to expose the funcionalities of backend to external users and systems. Has all routes necessary to interacts with all servers.
 
 #### API Endpoints
-Find below all endpoints exposed by API server. Payload examples are available in Postman collection within this repo: ``DS_Servers.postman_collection.json``.
+Find below all endpoints exposed by API server. Payload examples are available in Postman collection within this repo: `DS_Servers.postman_collection.json` and `DS_Servers_Env.postman_collection.json`.
 
 `POST http://<api_host>:<api_port>/auth/login`: used to authenticate the user.  
 `POST http://<api_host>:<api_port>/auth/logout`: fake route just to inform client to delete token.  
