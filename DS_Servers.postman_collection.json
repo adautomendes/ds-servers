@@ -1,10 +1,48 @@
 {
 	"info": {
-		"_postman_id": "8444ca3d-de4e-490e-b292-93ad4b22a4a2",
+		"_postman_id": "efaeabba-d3d2-4d7b-8dd6-c35ca4c705c2",
 		"name": "DS Servers",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Pre Setup",
+			"item": [
+				{
+					"name": "Setup Vars",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5e796f62-68d2-4570-938d-18117c20787e",
+								"exec": [
+									"pm.globals.clear();\r",
+									"\r",
+									"pm.globals.set(\"ds-servers-auth\", \"http://localhost:5000\");\r",
+									"pm.globals.set(\"ds-servers-core\", \"http://localhost:3000\");\r",
+									"pm.globals.set(\"ds-servers-api\", \"http://localhost:3333\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ds-servers-auth}}/",
+							"host": [
+								"{{ds-servers-auth}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Movie",
 			"item": [
@@ -39,12 +77,10 @@
 							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/auth/login",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/auth/login",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"auth",
 								"login"
@@ -89,12 +125,10 @@
 							"raw": "{\n\t\"title\": \"A volta dos que não foram\",\n\t\"duration\": 240,\n\t\"year\": 2019\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/movie",
-							"protocol": "http",
+							"raw": "{{ds-servers-core}}/movie",
 							"host": [
-								"localhost"
+								"{{ds-servers-core}}"
 							],
-							"port": "3000",
 							"path": [
 								"movie"
 							]
@@ -126,12 +160,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/movie",
-							"protocol": "http",
+							"raw": "{{ds-servers-core}}/movie",
 							"host": [
-								"localhost"
+								"{{ds-servers-core}}"
 							],
-							"port": "3000",
 							"path": [
 								"movie"
 							]
@@ -151,12 +183,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/movie/{{movie_id}}",
-							"protocol": "http",
+							"raw": "{{ds-servers-core}}/movie/{{movie_id}}",
 							"host": [
-								"localhost"
+								"{{ds-servers-core}}"
 							],
-							"port": "3000",
 							"path": [
 								"movie",
 								"{{movie_id}}"
@@ -186,12 +216,10 @@
 							"raw": "{\n\t\"id\": \"{{movie_id}}\",\n\t\"title\": \"A volta dos que não foram\",\n\t\"duration\": 1234,\n\t\"year\": 1234\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/movie",
-							"protocol": "http",
+							"raw": "{{ds-servers-core}}/movie",
 							"host": [
-								"localhost"
+								"{{ds-servers-core}}"
 							],
-							"port": "3000",
 							"path": [
 								"movie"
 							]
@@ -232,12 +260,10 @@
 							"raw": "{\n\t\"id\": \"{{movie_id}}\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/movie",
-							"protocol": "http",
+							"raw": "{{ds-servers-core}}/movie",
 							"host": [
-								"localhost"
+								"{{ds-servers-core}}"
 							],
-							"port": "3000",
 							"path": [
 								"movie"
 							]
@@ -270,12 +296,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5000/auth/logout",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/auth/logout",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"auth",
 								"logout"
@@ -320,12 +344,10 @@
 							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/auth/login",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/auth/login",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"auth",
 								"login"
@@ -370,12 +392,10 @@
 							"raw": "{\n\t\"username\": \"adauto\",\n\t\"password\": \"adauto\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/user",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/user",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"user"
 							]
@@ -408,12 +428,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5000/auth/logout",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/auth/logout",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"auth",
 								"logout"
@@ -453,12 +471,10 @@
 							"raw": "{\n\t\"username\": \"adauto\",\n\t\"password\": \"adauto\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/auth/login",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/auth/login",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"auth",
 								"login"
@@ -501,12 +517,10 @@
 							"raw": "{\n\t\"username\": \"adauto\",\n\t\"password\": \"adauto123456\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/user",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/user",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"user"
 							]
@@ -526,12 +540,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5000/user/",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/user/",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"user",
 								""
@@ -552,12 +564,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5000/user/{{user_id}}",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/user/{{user_id}}",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"user",
 								"{{user_id}}"
@@ -591,12 +601,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5000/auth/logout",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/auth/logout",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"auth",
 								"logout"
@@ -636,12 +644,10 @@
 							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/auth/login",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/auth/login",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"auth",
 								"login"
@@ -684,12 +690,10 @@
 							"raw": "{\n\t\"id\": \"{{user_id}}\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/user",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/user",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"user"
 							]
@@ -722,12 +726,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5000/auth/logout",
-							"protocol": "http",
+							"raw": "{{ds-servers-auth}}/auth/logout",
 							"host": [
-								"localhost"
+								"{{ds-servers-auth}}"
 							],
-							"port": "5000",
 							"path": [
 								"auth",
 								"logout"
@@ -776,12 +778,10 @@
 							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3333/auth/login",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/auth/login",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"auth",
 								"login"
@@ -830,12 +830,10 @@
 							"raw": "{\n\t\"username\": \"adauto\",\n\t\"password\": \"adauto\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3333/user",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/user",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"user"
 							]
@@ -868,12 +866,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3333/auth/logout",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/auth/logout",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"auth",
 								"logout"
@@ -917,12 +913,10 @@
 							"raw": "{\n\t\"username\": \"adauto\",\n\t\"password\": \"adauto\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3333/auth/login",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/auth/login",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"auth",
 								"login"
@@ -967,12 +961,10 @@
 							"raw": "{\n\t\"username\": \"adauto\",\n\t\"password\": \"adauto123456\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3333/user",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/user",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"user"
 							]
@@ -1006,12 +998,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3333/user/",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/user/",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"user",
 								""
@@ -1046,12 +1036,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3333/user/{{user_id}}",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/user/{{user_id}}",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"user",
 								"{{user_id}}"
@@ -1099,12 +1087,10 @@
 							"raw": "{\n\t\"title\": \"A volta dos que não foram\",\n\t\"duration\": 240,\n\t\"year\": 2019\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3333/movie",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/movie",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"movie"
 							]
@@ -1138,12 +1124,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3333/movie",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/movie",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"movie"
 							]
@@ -1177,12 +1161,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3333/movie/{{movie_id}}",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/movie/{{movie_id}}",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"movie",
 								"{{movie_id}}"
@@ -1226,12 +1208,10 @@
 							"raw": "{\n\t\"id\": \"{{movie_id}}\",\n\t\"title\": \"A volta dos que não foram\",\n\t\"duration\": 1234,\n\t\"year\": 1234\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3333/movie",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/movie",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"movie"
 							]
@@ -1276,12 +1256,10 @@
 							"raw": "{\n\t\"id\": \"{{movie_id}}\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3333/movie",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/movie",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"movie"
 							]
@@ -1314,12 +1292,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3333/auth/logout",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/auth/logout",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"auth",
 								"logout"
@@ -1363,12 +1339,10 @@
 							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3333/auth/login",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/auth/login",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"auth",
 								"login"
@@ -1415,12 +1389,10 @@
 							"raw": "{\n\t\"id\": \"{{user_id}}\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3333/user",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/user",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"user"
 							]
@@ -1453,12 +1425,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3333/auth/logout",
-							"protocol": "http",
+							"raw": "{{ds-servers-api}}/auth/logout",
 							"host": [
-								"localhost"
+								"{{ds-servers-api}}"
 							],
-							"port": "3333",
 							"path": [
 								"auth",
 								"logout"

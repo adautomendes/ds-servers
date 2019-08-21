@@ -1,11 +1,12 @@
 const HttpStatus = require('http-status-codes');
+const PasswordUtil = require('../utils/PasswordUtil');
 
 const User = require('../models/User');
 const Logger = require('../logger')('[USER]');
 
 module.exports = {
     async insert(req, res) {
-        const { username, password } = req.body;
+        let { username, password } = req.body;
 
         //Testing if user already exists
         const userExists = await User.findOne({ username });
@@ -14,6 +15,9 @@ module.exports = {
             Logger.print(`'${username}' already exists.`);
             return res.status(HttpStatus.OK).json(userExists);
         }
+
+        //Encrypt password
+        password = await PasswordUtil.cryptPassword(password);
 
         const user = await User.create({
             username,
@@ -25,7 +29,10 @@ module.exports = {
     },
 
     async update(req, res) {
-        const { username, password } = req.body;
+        let { username, password } = req.body;
+
+        //Encrypt password
+        password = await PasswordUtil.cryptPassword(password);
 
         const response = await User.updateOne({ username }, {
             password

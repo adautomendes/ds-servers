@@ -1,13 +1,16 @@
 const HttpStatus = require('http-status-codes');
 const jwt = require('jsonwebtoken');
-
+const PasswordUtil = require('../utils/PasswordUtil');
 const User = require('../models/User');
 const Logger = require('../logger')('[AUTH]');
 
 module.exports = {
     async login(req, res) {
         try {
-            const { username, password } = req.body;
+            let { username, password } = req.body;
+
+            //Encrypt password
+            password = await PasswordUtil.cryptPassword(password);
 
             const user = await User.findOne({ username, password });
 

@@ -11,7 +11,7 @@ This project contains 3 distinct servers which can be deployed separately and co
 ![](Structure.png)
 
 ### Auth Server
-Is the authentication server. Communicates with database to authenticate users and generate JWT (Json Web Token). Also is used by Core Server to validate the token provided by requests in Core's protected routes.
+Is the authentication server. Communicates with database to authenticate users and generate JWT (Json Web Token). Also is used by Core Server to validate the token provided by requests in Core's protected routes. All passwords are encrypted using SHA256.
 
 ### Core Server
 Server responsible to manipulate entities (e.g "Movie") inside database. Has protected routes which needs to receive a valid token to execute. In cases where token is not provided or wrong, Auth Server will return an error and the Core's protected routes will not be accessible.
@@ -20,7 +20,7 @@ Server responsible to manipulate entities (e.g "Movie") inside database. Has pro
 Server used to expose the funcionalities of backend to external users and systems. Has all routes necessary to interacts with all servers.
 
 #### API Endpoints
-Find below all endpoints exposed by API server. Payload examples are available in Postman collection within this repo: ``DS Servers.postman_collection.json``.
+Find below all endpoints exposed by API server. Payload examples are available in Postman collection within this repo: ``DS_Servers.postman_collection.json``.
 
 `POST http://<api_host>:<api_port>/auth/login`: used to authenticate the user.  
 `POST http://<api_host>:<api_port>/auth/logout`: fake route just to inform client to delete token.  

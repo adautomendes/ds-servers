@@ -9,6 +9,10 @@ const authRouter = express.Router();
 const userRouter = express.Router();
 const movieRouter = express.Router();
 
+appRouter.get('/', (req, res) => { //Root route of app
+    res.json({ ok: true })
+});
+
 appRouter.use('/auth', authRouter);
 authRouter.post('/login', AuthController.login);
 authRouter.post('/logout', AuthController.logout);
