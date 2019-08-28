@@ -6,14 +6,14 @@
 - [MongoDB](https://www.mongodb.com/): Document-based and distributed database.
 
 ## Architecture
-This project contains 3 distinct servers which can be deployed separately and communicate each other. Use the file `.env` within each project to configure each server. All communication between these servers is realized by REST/HTTP.
+This project contains 4 distinct servers which can be deployed separately and communicate each other. Use the file `.env` within each project to configure each server. All communication between these servers is realized by REST/HTTP.
 
-![](Structure.png)
+![](doc/Architecture.png)
 
 ### Auth Server
 Is the authentication server. Communicates with database to authenticate users and generate JWT (Json Web Token). Also is used by Core Server to validate the token provided by requests in Core's protected routes. All passwords are encrypted using SHA256.
 
-### Core Server
+### Core Server (2 Instances)
 Server responsible to manipulate entities (e.g "Movie") inside database. Has protected routes which needs to receive a valid token to execute. In cases where token is not provided or wrong, Auth Server will return an error and the Core's protected routes will not be accessible.
 
 ### API Server
@@ -45,7 +45,7 @@ Each project (folder) has a `.env` file which contains environment variables use
 `DB_NAME`: name of database that will be created by the application.  
 `SECRET`: keyword used by JWT to generate tokens.  
 
-### Core Server `.env` configuration
+### Core Server `.env` configuration (both instances)
 
 `PORT`: port used to run Core Server.  
 `DB_URL`: URL of the database.  
@@ -55,7 +55,8 @@ Each project (folder) has a `.env` file which contains environment variables use
 ### API Server `.env` configuration
 
 `PORT`: port used to run API Server.  
-`CORE_SERVER`: address of Auth Server (e.g `http://localhost:3000`).  
+`CORE_1_SERVER`: address of Core Server (instance 1) (e.g `http://localhost:3000`).  
+`CORE_2_SERVER`: address of Core Server (instance 2) (e.g `http://localhost:3001`).  
 `AUTH_SERVER`: address of Auth Server (e.g `http://localhost:5000`).  
 
 

@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "04c678f8-062c-439f-9abc-102ef8178a60",
+		"_postman_id": "a43725fb-b831-466a-87cc-a60200c1bbf0",
 		"name": "DS Servers",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Movie",
+			"name": "Movie - Core 1",
 			"item": [
 				{
 					"name": "Login as Admin",
@@ -87,9 +87,9 @@
 							"raw": "{\n\t\"title\": \"A volta dos que não foram\",\n\t\"duration\": 240,\n\t\"year\": 2019\n}"
 						},
 						"url": {
-							"raw": "{{ds-servers-core}}/movie",
+							"raw": "{{ds-servers-core-1}}/movie",
 							"host": [
-								"{{ds-servers-core}}"
+								"{{ds-servers-core-1}}"
 							],
 							"path": [
 								"movie"
@@ -122,9 +122,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{ds-servers-core}}/movie",
+							"raw": "{{ds-servers-core-1}}/movie",
 							"host": [
-								"{{ds-servers-core}}"
+								"{{ds-servers-core-1}}"
 							],
 							"path": [
 								"movie"
@@ -145,9 +145,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{ds-servers-core}}/movie/{{movie_id}}",
+							"raw": "{{ds-servers-core-1}}/movie/{{movie_id}}",
 							"host": [
-								"{{ds-servers-core}}"
+								"{{ds-servers-core-1}}"
 							],
 							"path": [
 								"movie",
@@ -178,9 +178,9 @@
 							"raw": "{\n\t\"id\": \"{{movie_id}}\",\n\t\"title\": \"A volta dos que não foram\",\n\t\"duration\": 1234,\n\t\"year\": 1234\n}"
 						},
 						"url": {
-							"raw": "{{ds-servers-core}}/movie",
+							"raw": "{{ds-servers-core-1}}/movie",
 							"host": [
-								"{{ds-servers-core}}"
+								"{{ds-servers-core-1}}"
 							],
 							"path": [
 								"movie"
@@ -222,9 +222,276 @@
 							"raw": "{\n\t\"id\": \"{{movie_id}}\"\n}"
 						},
 						"url": {
-							"raw": "{{ds-servers-core}}/movie",
+							"raw": "{{ds-servers-core-1}}/movie",
 							"host": [
-								"{{ds-servers-core}}"
+								"{{ds-servers-core-1}}"
+							],
+							"path": [
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "30d93510-50d2-404f-852a-ad68532068f9",
+								"exec": [
+									"pm.globals.unset(\"admin_token\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{ds-servers-auth}}/auth/logout",
+							"host": [
+								"{{ds-servers-auth}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movie - Core 2",
+			"item": [
+				{
+					"name": "Login as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "30d93510-50d2-404f-852a-ad68532068f9",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.globals.set(\"admin_token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{ds-servers-auth}}/auth/login",
+							"host": [
+								"{{ds-servers-auth}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a572396-c828-432c-8ecd-884b03958e92",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.globals.set(\"movie_id\", jsonData._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"A volta dos que não foram\",\n\t\"duration\": 240,\n\t\"year\": 2019\n}"
+						},
+						"url": {
+							"raw": "{{ds-servers-core-2}}/movie",
+							"host": [
+								"{{ds-servers-core-2}}"
+							],
+							"path": [
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c37ee0e6-b36b-4f0f-8689-15c7062e17c1",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{admin_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ds-servers-core-2}}/movie",
+							"host": [
+								"{{ds-servers-core-2}}"
+							],
+							"path": [
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find movie by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{admin_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ds-servers-core-2}}/movie/{{movie_id}}",
+							"host": [
+								"{{ds-servers-core-2}}"
+							],
+							"path": [
+								"movie",
+								"{{movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update movie",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"{{movie_id}}\",\n\t\"title\": \"A volta dos que não foram\",\n\t\"duration\": 1234,\n\t\"year\": 1234\n}"
+						},
+						"url": {
+							"raw": "{{ds-servers-core-2}}/movie",
+							"host": [
+								"{{ds-servers-core-2}}"
+							],
+							"path": [
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c2eec205-fdcd-4940-9e90-f8cf8771bdd1",
+								"exec": [
+									"pm.globals.unset(\"movie_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "{{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"{{movie_id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{ds-servers-core-2}}/movie",
+							"host": [
+								"{{ds-servers-core-2}}"
 							],
 							"path": [
 								"movie"
@@ -960,13 +1227,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{ds-servers-api}}/user/",
+							"raw": "{{ds-servers-api}}/user",
 							"host": [
 								"{{ds-servers-api}}"
 							],
 							"path": [
-								"user",
-								""
+								"user"
 							]
 						}
 					},

@@ -8,7 +8,7 @@ module.exports = {
     async login(req, res, next) {
         const { username, password } = req.body;
 
-        let url = process.env.AUTH_SERVER + '/auth/login';
+        let url = `${process.env.AUTH_SERVER}/auth/login`;
         let postData = { username, password };
         let axiosConfig = {};
 

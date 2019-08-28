@@ -20,5 +20,5 @@ mongoose.connect(DB.DB_URL, DB.DB_SETTINGS, (err) => {
 });
 
 server.listen(process.env.PORT, () => {
-    Logger.print(`✔ Core server running at port ${process.env.PORT}`)
+    Logger.print(`✔ Core 1 server running at port ${process.env.PORT}`)
 });

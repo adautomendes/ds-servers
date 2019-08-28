@@ -23,7 +23,12 @@ userRouter.patch('/', UserController.update);
 userRouter.get('/:id?', UserController.search);
 userRouter.delete('/', UserController.delete);
 
-appRouter.use('/movie', AuthController.tokenExists, movieRouter);
+/**
+ * Here we use 2 middlewares functions:
+ * tokenExists => verify if token exists in request header
+ * loadBalanceForCore => define what Core server will be accessed
+ */
+appRouter.use('/movie', AuthController.tokenExists, MovieController.loadBalanceForCore, movieRouter);
 movieRouter.post('/', MovieController.insert);
 movieRouter.patch('/', MovieController.update);
 movieRouter.get('/:id?', MovieController.search);

@@ -5,7 +5,7 @@ module.exports = {
     async insert(req, res) {
         const { token } = req.headers;
 
-        let url = process.env.AUTH_SERVER + '/user';
+        let url = `${process.env.AUTH_SERVER}/user`;
         let postData = req.body;
         let axiosConfig = {
             headers: {
@@ -18,7 +18,7 @@ module.exports = {
             .then((response) => {
                 return res.status(response.status).json(response.data);
             })
-            .catch((error) => { //TODO: testar o que acontece se não passar o token
+            .catch((error) => {
                 Logger.print(error);
                 return res.status(error.response.status).json(error.response.data);
             });
@@ -27,7 +27,7 @@ module.exports = {
     async update(req, res) {
         const { token } = req.headers;
 
-        let url = process.env.AUTH_SERVER + '/user';
+        let url = `${process.env.AUTH_SERVER}/user`;
         let postData = req.body;
         let axiosConfig = {
             headers: {
@@ -40,7 +40,7 @@ module.exports = {
             .then((response) => {
                 return res.status(response.status).json(response.data);
             })
-            .catch((error) => { //TODO: testar o que acontece se não passar o token
+            .catch((error) => {
                 return res.status(error.response.status).json(error.response.data);
             });
     },
@@ -49,9 +49,9 @@ module.exports = {
         const { token } = req.headers;
         const { id } = req.params;
 
-        let url = process.env.AUTH_SERVER + '/user';
+        let url = `${process.env.AUTH_SERVER}/user`;
         if (id)
-            url += '/' + id;
+            url += `/${id}`;
 
         let axiosConfig = {
             headers: {
@@ -64,7 +64,7 @@ module.exports = {
             .then((response) => {
                 return res.status(response.status).json(response.data);
             })
-            .catch((error) => { //TODO: testar o que acontece se não passar o token
+            .catch((error) => {
                 return res.status(error.response.status).json(error.response.data);
             });
     },
@@ -73,7 +73,7 @@ module.exports = {
         const { token } = req.headers;
         const { id } = req.body;
 
-        let url = process.env.AUTH_SERVER + '/user';
+        let url = `${process.env.AUTH_SERVER}/user`;
         let axiosConfig = {
             headers: { token },
             data: { id }
@@ -84,7 +84,7 @@ module.exports = {
             .then((response) => {
                 return res.status(response.status).json(response.data);
             })
-            .catch((error) => { //TODO: testar o que acontece se não passar o token
+            .catch((error) => {
                 return res.status(error.response.status).json(error.response.data);
             });
     }
