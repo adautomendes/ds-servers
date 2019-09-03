@@ -69,4 +69,4 @@ To run each server open a command window in each folder and run the command belo
 
 `yarn dev`
 
-In Windows you can run only `runServers.cmd` to run both three servers.
+In Windows you can run only `runServers.cmd` to run both four servers.
