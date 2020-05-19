@@ -5,6 +5,7 @@ module.exports = {
 
     DB_SETTINGS: {
         useCreateIndex: true,
+        useUnifiedTopology: true,
         useNewUrlParser: true,
         useFindAndModify: true,
         dbName: process.env.DB_NAME
